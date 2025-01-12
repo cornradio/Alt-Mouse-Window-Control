@@ -50,7 +50,7 @@ loop{
 	if var3=D
 		return
 
-	Sleep,20	;延时20毫秒再跟踪下一次位置变动（即50帧分辨率）
+	Sleep,0.5   ;延时4毫秒再跟踪下一次位置变动
 	continue
 }
 
@@ -103,7 +103,7 @@ loop{
 	newh:= Max(winh + (my2 - my1) * hup, minHeight)		;窗口新高度
 	WinMove, ahk_id %win%,, %newx%, %newy%, %neww%, %newh%	;以窗口新坐标新尺寸变动窗口
 
-	Sleep,30	;循环延时30毫秒，相当于33帧
+	Sleep,4    ;循环延时4毫秒，相当于240帧
 }
 
 return
