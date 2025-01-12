@@ -109,39 +109,6 @@ loop{
 return
 
 
-;按住左边Alt键时向下滚动鼠标滚轮，增加鼠标下方窗口透明度，变透明
-~LAlt & WheelDown::
-MouseGetPos, mx, my, mwin
-WinGet, n, Transparent, ahk_id %mwin%
-if (n = "")
-{
-	n := 255
-}
-;WinGetActiveStats, mt, mw, mh, X, Y
-;if (my < 32 and my > 0 and mx > 0 and mx < mw and n > 26) ;仅在标题栏起作用
-if (n > 26)
-{
-	n -= 13
-	WinSet, Transparent, %n%, ahk_id %mwin%
-}
-return
-
-;按住左边Alt键时向上滚动鼠标滚轮，减少鼠标下方窗口透明度，变不透明
-~LAlt & WheelUp::
-WinGet, n, Transparent, ahk_id %mwin%
-;WinGetActiveStats, mt, mw, mh, X, Y
-;if (my < 32 and my > 0 and mx > 0 and mx < mw and n < 255 and n <> "")
-if (n < 255 and n <> "")
-{
-	n += 13
-	if (n >= 255)
-	{
-		n := "off"
-	}
-	WinSet, Transparent, %n%, ahk_id %mwin%
-}
-return
-
 ;按住左边Alt键时按右键切换置顶
 ~LAlt & MButton::
 MouseGetPos, mx, my, mwin
