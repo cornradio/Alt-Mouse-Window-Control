@@ -1,11 +1,10 @@
-﻿Menu, Tray, Icon, %A_ScriptDir%\Alt：左键移动，中键大小，右键置顶，滚轮透明度.ico
-;#NoTrayIcon
+﻿;#NoTrayIcon
 
 SetWinDelay,0
 CoordMode,Mouse,Screen
 
 ;长按左边Alt键时拖动鼠标左键，鼠标下的窗口跟随鼠标移动
-~LAlt & LButton::
+~LWin & LButton::
 
 StartTime := A_TickCount
 ;loop{	;启动延时，超过0.4秒之后才开始移动窗口，避免影响其他Alt键键击
@@ -42,7 +41,7 @@ loop{
 	y=%y2%
 	WinMove,ahk_id %win%,,%a%,%b%	;移动该窗口到新位置
 
-	GetKeyState,var1,LAlt,p   	;如果LAlt松开了，退出
+	GetKeyState,var1,LWin,p   	;如果LWin松开了，退出
 	GetKeyState,var1,LButton,p   	;如果鼠标左键松开了，退出
 	if var1=U
 		return
@@ -59,7 +58,7 @@ return
 
 
 ;按住左边Alt键时拖动鼠标中键，根据鼠标初始位置随鼠标变动窗口最近角的位置从而改变窗口大小
-~LAlt & RButton::
+~LWin & RButton::
 
 minWidth:= 100
 minHeight:= 32
@@ -93,7 +92,7 @@ else
 
 loop{
 
-	GetKeyState,var1,LAlt,p   	;循环获取LAlt状态，若松开则跳出
+	GetKeyState,var1,LWin,p   	;循环获取LWin状态，若松开则跳出
 	GetKeyState,var1,RButton,p	;循环获取鼠标中键状态，若松开则跳出
 	if var1=U
 		break
@@ -110,28 +109,3 @@ loop{
 
 return
 
-
-;按住左边Alt键时按右键切换置顶
-~LAlt & MButton::
-MouseGetPos, mx, my, mwin
-;WinGetPos, x, y, mw, , ahk_id %mwin%
-;OutputDebug, mx:%mx%, my:%my%, mw:%mw%, win:%mwin%
-;if (my > y and my < y + 32 and mx > x and mx < x + mw)
-;{
-	WinActivate ahk_id %mwin%
-	WinGetTitle mwint, A
-	If (StrLen(mwint)>20){
-		mwint := SubStr(mwint, 1, 20) "…"
-	}
-	WinSet, AlwaysOnTop, Toggle, ahk_id %mwin%
-	WinGet, isontop, ExStyle, ahk_id %mwin%
-	if (isontop & 0x8){
-		strontop := "已置顶"
-	} else {
-		strontop := "已取消置顶"
-	}
-	ToolTip, 【%mwint%】窗口 %strontop%
-	Sleep, 2000
-	ToolTip
-;}
-return
