@@ -49,8 +49,8 @@ loop{
 	GetKeyState,var3,Tab,p   	;如果Tab按下（即Alt-Tab），退出
 	if var3=D
 		return
-
-	Sleep,0.5   ;延时4毫秒再跟踪下一次位置变动
+	; setting ⭐
+	Sleep,1   ;延时跟踪下一次位置变动，数字越小越流畅越吃性能
 	continue
 }
 
@@ -63,6 +63,8 @@ return
 
 minWidth:= 100
 minHeight:= 32
+; setting ⭐
+scaleFactor:= 1.5  ; 添加放大倍数，可以根据需要调整，更大的数字意味着更灵敏的调整
 
 MouseGetPos,mx1,my1,win	;获取当前鼠标位置和鼠标下的窗口（延时后的所在窗口，不管是否当前窗口）
 WinGetPos,winx,winy,winw,winh,ahk_id %win%	;获取鼠标下的窗口的位置和宽高
@@ -97,10 +99,10 @@ loop{
 		break
 
 	MouseGetPos,mx2,my2			;获取当前鼠标位置
-	newx:= winx + (mx2 - mx1) * xleft	;窗口新x坐标
-	newy:= winy + (my2 - my1) * yup		;窗口新y坐标
-	neww:= Max(winw + (mx2 - mx1) * wleft, minWidth)	;窗口新宽度
-	newh:= Max(winh + (my2 - my1) * hup, minHeight)		;窗口新高度
+	newx:= winx + ((mx2 - mx1) * scaleFactor) * xleft	;窗口新x坐标
+	newy:= winy + ((my2 - my1) * scaleFactor) * yup		;窗口新y坐标
+	neww:= Max(winw + ((mx2 - mx1) * scaleFactor) * wleft, minWidth)	;窗口新宽度
+	newh:= Max(winh + ((my2 - my1) * scaleFactor) * hup, minHeight)		;窗口新高度
 	WinMove, ahk_id %win%,, %newx%, %newy%, %neww%, %newh%	;以窗口新坐标新尺寸变动窗口
 
 	Sleep,4    ;循环延时4毫秒，相当于240帧
