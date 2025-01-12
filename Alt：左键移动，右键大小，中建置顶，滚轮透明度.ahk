@@ -92,7 +92,7 @@ else
 loop{
 
 	GetKeyState,var1,LAlt,p   	;循环获取LAlt状态，若松开则跳出
-	GetKeyState,var1,MButton,p	;循环获取鼠标中键状态，若松开则跳出
+	GetKeyState,var1,RButton,p	;循环获取鼠标中键状态，若松开则跳出
 	if var1=U
 		break
 
